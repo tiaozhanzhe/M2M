@@ -10,19 +10,18 @@ M2M is a fine-grained mapping framework for accelerating multiple DNNs on a mult
 
 # Overview
 
+```
 M2M
 │  run_SE.py
 │  requirements.txt
 │  README.md
 │
 ├─gem5
-│  ├─build
 │  ├─build_opts
 │  ├─configs
 │  ├─dnn_out
 │  ├─ext
 │  ├─include
-│  ├─m5out
 │  ├─previous
 │  ├─site_scons
 │  ├─src
@@ -42,10 +41,11 @@ M2M
 ├─partition
 ├─comm_pattern
 ├─result_out
+```
 
 # Installation and Build
 
-## 1. Requirements for gem5
+## Requirements for gem5
 
 ```
 sudo apt install build-essential git m4 scons zlib1g zlib1g-dev libprotobuf-dev protobuf-compiler libprotoc-dev libgoogle-perftools-dev python-dev python
@@ -55,14 +55,14 @@ sudo apt install scons
 sudo apt install python3-dev
 ```
 
-## 2. Build gem5
+## Build gem5
 
 ```
 cd gem5
 source ./build.sh
 ```
 
-## 3. Requirments for python
+## Requirments for python
 
 ```
 pip install -r requirements.txt
