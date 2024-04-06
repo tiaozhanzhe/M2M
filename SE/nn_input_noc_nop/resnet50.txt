@@ -1,0 +1,52 @@
+# layer_3 = {"H":7,"M":7,"C":64,"R":3, "stride":1, "padding":1,"K":64,"P":56,"Q":56}
+* layer1 layer2 layer3 layer4 layer5 layer11 layer12 layer13 layer14 layer15 layer23 layer24 layer25 layer26 layer27 layer41 layer42 layer43 layer44 layer45 layer50 end
+layer1 224 224 3 7 2 3 64 112 112 conv_layer1 0-0
+layer2 56 56 64 1 1 0 64 56 56 conv_layer2 1-1
+layer3 56 56 64 3 1 1 64 56 56 conv_layer3*3 1-0
+layer4 56 56 64 1 1 0 256 56 56 conv_layer4*3 1-0
+layer5 56 56 256 1 1 0 64 56 56 conv_layer5*2 1-0
+layer6 56 56 64 3 1 1 64 56 56 -
+layer7 56 56 64 1 1 0 256 56 56 - 
+layer8 56 56 256 1 1 0 64 56 56 -
+layer9 56 56 64 3 1 1 64 56 56 -
+layer10 56 56 64 1 1 0 256 56 56 -
+layer11 56 56 256 1 1 0 128 56 56 conv_layer6 1-1
+layer12 56 56 128 3 2 1 128 28 28 conv_layer7 1-0
+layer13 28 28 128 1 1 0 512 28 28 conv_layer8*4 1-0
+layer14 28 28 512 1 1 0 128 28 28 conv_layer9*3 1-1
+layer15 28 28 128 3 1 1 128 28 28 conv_layer10*3 1-0
+layer16 28 28 128 1 1 0 512 28 28 -8
+layer17 28 28 512 1 1 0 128 28 28 -9
+layer18 28 28 128 3 1 1 128 28 28 -10
+layer19 28 28 128 1 1 0 512 28 28 -8
+layer20 28 28 512 1 1 0 128 28 28 -9
+layer21 28 28 128 3 1 1 128 28 28 -10
+layer22 28 28 128 1 1 0 512 28 28 -8
+layer23 28 28 512 1 1 0 256 28 28 conv_layer11 1-1
+layer24 28 28 256 3 2 1 256 14 14 conv_layer12 1-0
+layer25 14 14 256 1 1 0 1024 14 14 conv_layer13*6 1-0
+layer26 14 14 1024 1 1 0 256 14 14 conv_layer14*5 1-1
+layer27 14 14 256 3 1 1 256 14 14 conv_layer15*5 1-0
+layer28 14 14 256 1 1 0 1024 14 14 -13
+layer29 14 14 1024 1 1 0 256 14 14 -14
+layer30 14 14 256 3 1 1 256 14 14 -15
+layer31 14 14 256 1 1 0 1024 14 14 -13
+layer32 14 14 1024 1 1 0 256 14 14 -14
+layer33 14 14 256 3 1 1 256 14 14 -15
+layer34 14 14 256 1 1 0 1024 14 14 -13
+layer35 14 14 1024 1 1 0 256 14 14 -14
+layer36 14 14 256 3 1 1 256 14 14 -15
+layer37 14 14 256 1 1 0 1024 14 14 -13
+layer38 14 14 1024 1 1 0 256 14 14 -14
+layer39 14 14 256 3 1 1 256 14 14 -15
+layer40 14 14 256 1 1 0 1024 14 14 -13
+layer41 14 14 1024 1 1 0 512 14 14 conv_layer16 2-1
+layer42 14 14 512 3 2 1 512 7 7 conv_layer17 3-0
+layer43 7 7 512 1 1 0 2048 7 7 conv_layer18*3 3-0
+layer44 7 7 2048 1 1 0 512 7 7 conv_layer19*2 3-0
+layer45 7 7 512 3 1 1 512 7 7 conv_layer20*2 3-0
+layer46 7 7 512 1 1 0 2048 7 7 -18
+layer47 7 7 2048 1 1 0 512 7 7 -19
+layer48 7 7 512 3 1 1 512 7 7 -20
+layer49 7 7 512 1 1 0 2048 7 7 -18
+layer50 1 1 2048 1 1 0 1000 1 1 conv_layer21 3-0

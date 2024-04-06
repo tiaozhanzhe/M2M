@@ -1,0 +1,25 @@
+# layer_3 = {"H":7,"M":7,"C":64,"R":3, "stride":1, "padding":1,"K":64,"P":56,"Q":56}
+* layer1 layer2 layer3 layer4 layer5 layer6 layer7 layer8 layer9 layer10 layer11 layer12 layer13 layer14 layer15 layer16 layer17 layer18 layer19 layer20 layer21 layer22 layer23 end
+layer1 572 572 1 3 1 1 64 570 570 conv_layer1 0-1
+layer2 570 570 64 3 1 1 64 568 568 conv_layer2 0-2
+layer3 284 284 64 3 1 1 128 282 282 conv_layer3 1-1
+layer4 282 282 128 3 1 1 128 140 140 conv_layer4 1-2
+layer5 140 140 128 3 1 1 256 138 138 conv_layer5 1-3
+layer6 138 138 256 3 1 1 256 136 136 conv_layer6 1-4
+layer7 68 68 256 3 1 1 512 66 66 conv_layer7 1-4
+layer8 66 66 512 3 1 1 512 64 64 conv_layer8 1-4
+layer9 32 32 512 3 1 1 1024 32 32 conv_layer9 1-4
+layer10 30 30 1024 3 1 1 1024 28 28 conv_layer10 1-4
+layer11 28 28 1024 2 1 1 512 56 56 conv_layer11 1-4
+layer12 56 56 1024 3 1 1 512 54 54 conv_layer12 1-4
+layer13 54 54 512 3 1 1 512 52 52 conv_layer13 1-4
+layer14 52 52 512 2 1 1 512 104 104 conv_layer14 1-4
+layer15 104 104 512 3 1 1 256 102 102 conv_layer15 1-4
+layer16 102 102 256 3 1 1 256 100 100 conv_layer16 1-4
+layer17 100 100 256 2 1 1 128 200 200 conv_layer17 1-4
+layer18 200 200 128 3 1 1 128 198 198 conv_layer18 1-4
+layer19 198 198 128 3 1 1 128 196 196 conv_layer19 1-4
+layer20 196 196 128 2 1 1 128 392 392 conv_layer20 1-4
+layer21 392 392 128 3 1 1 64 390 390 conv_layer21 1-4
+layer22 390 390 64 3 1 1 64 388 388 conv_layer22 1-4
+layer23 388 388 64 1 1 1 2 388 388 conv_layer23 1-4

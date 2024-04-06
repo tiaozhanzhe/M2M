@@ -1,0 +1,19 @@
+# layer_3 = {"H":7,"M":7,"C":64,"R":3, "stride":1, "padding":1,"K":64,"P":56,"Q":56}
+* layer1 layer2 layer6 layer7 layer10 layer11 layer14 layer15 end
+layer1 224 224 3 7 2 3 64 112 112 layer1 0-1
+layer2 56 56 64 3 1 1 64 56 56 layer2*4 1-1
+layer3 56 56 64 3 1 1 64 56 56
+layer4 56 56 64 3 1 1 64 56 56
+layer5 56 56 64 3 1 1 64 56 56
+layer6 56 56 64 3 2 1 128 28 28 layer6 1-1
+layer7 28 28 128 3 1 1 128 28 28 layer7*3 1-1
+layer8 28 28 128 3 1 1 128 28 28
+layer9 28 28 128 3 1 1 128 28 28 
+layer10 28 28 128 3 2 1 256 14 14 layer10 1-1
+layer11 14 14 256 3 1 1 256 14 14 layer11*3 1-1
+layer12 14 14 256 3 1 1 256 14 14
+layer13 14 14 256 3 1 1 256 14 14
+layer14 14 14 256 3 2 1 512 7 7 layer14 2-1
+layer15 7 7 512 3 1 1 512 7 7 layer15*3 3-0
+layer16 7 7 512 3 1 1 512 7 7
+layer17 7 7 512 3 1 1 512 7 7
