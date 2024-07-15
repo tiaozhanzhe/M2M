@@ -90,7 +90,7 @@ class GASolver():
 
 		for_list, act_wgt_dict, out_dict, parallel_dim_list, partition_list, code = self.GAGen.GaGetChild(Ga_code)
 		#---计算适应度 as mid layer of the workload---
-		delay_dict["mid"], degrade_ratio_dict["mid"], degrade_ratio_dict_dict["mid"], flit_needed_dict["mid"], compuation_cycles_dict["mid"], runtime_list,cp_list,utilization_ratio_list, energy_dram_list, energy_L2_list, energy_L1_list, energy_die2die, energy_MAC, energy_psum_list, delay_psum, worstlinks = \
+		delay_dict["mid"], degrade_ratio_dict["mid"], degrade_ratio_dict_dict["mid"], flit_needed_dict["mid"], _, _, compuation_cycles_dict["mid"], runtime_list, cp_list,utilization_ratio_list, energy_dram_list, energy_L2_list, energy_L1_list, energy_die2die, energy_MAC, energy_psum_list, delay_psum, worstlinks = \
 			calFitness(for_list, act_wgt_dict, out_dict, parallel_dim_list, partition_list, self.GAGen.network_param, self.GAGen.HW_param, self.memory_param, self.NoC_param, self.if_multicast, self.architecture, self.input_act_enough, 0, self.weight_enough, self.fuse_par_num, self.fuse_tag, io_die_tag = self.io_die_tag)
 		#---比较适应度，并记录相关变量---
 		e_mem = sum(energy_dram_list)+sum(energy_L2_list)+sum(energy_L1_list)
@@ -102,7 +102,7 @@ class GASolver():
 		if self.input_act_enough == 1 and self.fuse_tag != "tailFuse":
 			i_act_SRAM_enough = 0
 			o_act_DRAM = 0
-			delay_dict["head"], degrade_ratio_dict["head"], degrade_ratio_dict_dict["head"], flit_needed_dict["head"], compuation_cycles_dict["head"], runtime_list,cp_list,utilization_ratio_list, energy_dram_list, energy_L2_list, energy_L1_list, energy_die2die, energy_MAC, energy_psum_list, delay_psum, worstlinks = \
+			delay_dict["head"], degrade_ratio_dict["head"], degrade_ratio_dict_dict["head"], flit_needed_dict["head"], _, _, compuation_cycles_dict["head"], runtime_list,cp_list,utilization_ratio_list, energy_dram_list, energy_L2_list, energy_L1_list, energy_die2die, energy_MAC, energy_psum_list, delay_psum, worstlinks = \
 				calFitness(for_list, act_wgt_dict, out_dict, parallel_dim_list, partition_list, self.GAGen.network_param, self.GAGen.HW_param, self.memory_param, self.NoC_param, self.if_multicast, self.architecture, i_act_SRAM_enough, o_act_DRAM, self.weight_enough, self.fuse_par_num, self.fuse_tag, io_die_tag = self.io_die_tag)
 			#---比较适应度，并记录相关变量---
 			e_mem = sum(energy_dram_list)+sum(energy_L2_list)+sum(energy_L1_list)
@@ -122,7 +122,7 @@ class GASolver():
 		if self.fuse_tag != "headFuse":
 			i_act_SRAM_enough = self.input_act_enough
 			o_act_DRAM = 1
-			delay_dict["tail"], degrade_ratio_dict["tail"], degrade_ratio_dict_dict["tail"], flit_needed_dict["tail"], compuation_cycles_dict["tail"], runtime_list,cp_list,utilization_ratio_list, energy_dram_list, energy_L2_list, energy_L1_list, energy_die2die, energy_MAC, energy_psum_list, delay_psum, worstlinks = \
+			delay_dict["tail"], degrade_ratio_dict["tail"], degrade_ratio_dict_dict["tail"], flit_needed_dict["tail"], _, _, compuation_cycles_dict["tail"], runtime_list,cp_list,utilization_ratio_list, energy_dram_list, energy_L2_list, energy_L1_list, energy_die2die, energy_MAC, energy_psum_list, delay_psum, worstlinks = \
 				calFitness(for_list, act_wgt_dict, out_dict, parallel_dim_list, partition_list, self.GAGen.network_param, self.GAGen.HW_param, self.memory_param, self.NoC_param, self.if_multicast, self.architecture, i_act_SRAM_enough, o_act_DRAM, self.weight_enough, self.fuse_par_num, self.fuse_tag, io_die_tag = self.io_die_tag)
 			#---比较适应度，并记录相关变量---
 			e_mem = sum(energy_dram_list)+sum(energy_L2_list)+sum(energy_L1_list)

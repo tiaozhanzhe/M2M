@@ -1,5 +1,5 @@
 
-for file in /home/zhangjm/python/old/comm_pattern/trace_file/unicast/*;
+for file in /home/zhangjm/python/submit/dnn_task/*;
 do
     echo $file is running \! ;
     ./build/Garnet_standalone/gem5.opt \

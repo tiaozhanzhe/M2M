@@ -94,11 +94,9 @@ First we need to generate gem5 trace
 ```
 cd ./SE
 source ./validation.sh
-cd ./comm_pattern
-source run.sh
 ```
 
-We generate the gem5 trace in ``./comm_pattern/trace_file/*``
+We generate the gem5 trace in ``SE/dnn_task/*``
 
 Then we run gem5
 
