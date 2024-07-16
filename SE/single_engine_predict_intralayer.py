@@ -1093,22 +1093,24 @@ def structTopology(HW_param):
     for row in range(NoP_h):
         for col in range(NoP_w):
             node_id = col + row * NoP_w
-            if col == 0 or col == NoP_w-1:
+            if col == 0 or col == NoP_w - 1:
                 chiplet_type[node_id] = "m_chip"
             else:
                 chiplet_type[node_id] = "c_chip"
+    # print("chiplet_type: ", chiplet_type)
     
     # --- chiplet id 2 : set reserved
     mchip = 0
     for row in range(NoP_h):
         if row % h_cchip_per_mchip == 0:
             mchip += 2
-            if mchip >= cluster_num:
+            if mchip > cluster_num:
                 assert(chiplet_type[(row+1) * NoP_w-1] == "m_chip")
                 chiplet_type[(row+1) * NoP_w-1] = "reserved"
         else:
             chiplet_type[row * NoP_w] = "reserved"
-            chiplet_type[(row+1) * NoP_w-1] = "reserved"
+            chiplet_type[(row + 1) * NoP_w - 1] = "reserved"
+    # print("chiplet_type: ", chiplet_type)
     
     cchip = 0
     for row in range(math.ceil(cluster_num / 2)):
@@ -1486,122 +1488,6 @@ def createPattern(task_packet_record, HW_param, dir_name, act_wgt_dict, out_dict
         for dst in dst_list:
             print("    - {}".format(dst), file = file_o)  
     file_o.close()
-
-def createTotalNode(HW_param, act_wgt_dict, out_dict):
-    
-    # confirm o-node in each chiplet, which means offset
-    
-    w_cchip_per_mchip = 2
-    h_cchip_per_mchip = 2
-    
-    # chiplet NoP structure
-    ChipNum = HW_param["Chiplet"][0] * HW_param["Chiplet"][1]
-    # --- chiplet id 1 : mchip and cchip
-    c_chip_num = ChipNum
-    cluster_num = math.ceil(c_chip_num / w_cchip_per_mchip / h_cchip_per_mchip) # --- cluster = w_cchip_per_mchip * h_cchip_per_mchip c_chips + 1 m_chip
-    NoP_w = (w_cchip_per_mchip + 1) * 2
-    NoP_h = math.ceil(cluster_num / 2) * h_cchip_per_mchip
-    
-    chiplet_type = {}
-    for row in range(NoP_h):
-        for col in range(NoP_w):
-            node_id = col + row * NoP_w
-            if col == 0 or col == NoP_w-1:
-                chiplet_type[node_id] = "m_chip"
-            else:
-                chiplet_type[node_id] = "c_chip"
-    
-    # --- chiplet id 2 : set reserved
-    mchip = 0
-    for row in range(NoP_h):
-        if row % h_cchip_per_mchip == 0:
-            mchip += 2
-            if mchip >= cluster_num:
-                assert(chiplet_type[(row+1) * NoP_w-1] == "m_chip")
-                chiplet_type[(row+1) * NoP_w-1] = "reserved"
-        else:
-            chiplet_type[row * NoP_w] = "reserved"
-            chiplet_type[(row+1) * NoP_w-1] = "reserved"
-    
-    cchip = 0
-    for row in range(math.ceil(cluster_num / 2)):
-        for col in range(2):
-            for row2 in range(h_cchip_per_mchip):
-                for col2 in range(w_cchip_per_mchip + 1):
-                    node_id = (row * h_cchip_per_mchip + row2) * NoP_w + (col*(w_cchip_per_mchip + 1) + col2)
-                    if chiplet_type[node_id] == "c_chip":
-                        cchip += 1
-                        if cchip > c_chip_num:
-                            chiplet_type[node_id] = "reserved"
-    
-    # --- chiplet id 3 : chiplet id dict
-    chiplet_id_dict = {"c_chip":[], "m_chip":[], "reserved":[]}
-    
-    for row in range(NoP_h):
-        for col in range(NoP_w):
-            node_id = row * NoP_w + col
-            node_type = chiplet_type[node_id]
-            chiplet_id_dict[node_type].append(node_id)
-    
-    # --- chiplet id 4 : set cluster (mchip <-> cchip_list)
-    cluster_dict = {}
-    c2m_dict = {}
-    
-    left_m_id = 0
-    right_m_id = 0
-    for row in range(NoP_h):
-        if row % h_cchip_per_mchip == 0:
-            left_m_id = row * NoP_w
-            right_m_id = (row+1) * NoP_w - 1
-            cluster_dict[left_m_id] = []
-            cluster_dict[right_m_id] = []
-        else:
-            pass
-        
-        for col in range(NoP_w):
-            node_id = col + row * NoP_w
-            if chiplet_type[node_id] == "c_chip":
-                if col <= w_cchip_per_mchip:
-                    cluster_dict[left_m_id].append(node_id)
-                    c2m_dict[node_id] = left_m_id
-                else:
-                    cluster_dict[right_m_id].append(node_id)
-                    c2m_dict[node_id] = right_m_id
-    
-    # Nop structure
-    w_PEp= HW_param["PE"][1]
-    h_PEp= HW_param["PE"][0]
-    # --- noc 1 : mem node offset in noc
-    ol2_node_offset = A_W_offset['o']
-    if h_PE == 2:
-        al2_node_offset = ol2_node_offset + w_PE + 1
-        wl2_node_offset = ol2_node_offset + w_PE + 1
-    else:
-        assert(h_PE > 1)
-        al2_node_offset = A_W_offset['a']
-        wl2_node_offset = A_W_offset['w']
-    mem_node_list = [ol2_node_offset, al2_node_offset, wl2_node_offset]
-    
-    # --- noc 2 : noc_id_dict
-    noc_id_dict = {"c_core":[], "m_core":[], "reserved":[]}
-    for row in range(h_PE):
-        mem_id = row * (w_PE+1)
-        if mem_id in mem_node_list:
-            noc_id_dict["m_core"].append(mem_id)
-        else:
-            noc_id_dict["reserved"].append(mem_id)
-        for col in range(1, w_PE+1):
-            c_id = mem_id + col
-            noc_id_dict["c_core"].append(c_id)
-    
-    # print("noc_id_dict: ", noc_id_dict)
-    
-    act_core_dict = act_wgt_dict["act_core"][0]["recv"]
-    wgt_core_dict = act_wgt_dict["wgt_core"][0]["recv"]
-    act_chip_dict = act_wgt_dict["act_chiplet"]["recv"]
-    wgt_chip_dict = act_wgt_dict["wgt_chiplet"]["recv"]
-    out_core_dict = out_dict["rd_core"][0]["recv"]
-    out_chip_dict = out_dict["rd_chip"]["recv"]
 
 def createTaskFileNopNoc(task_packet_record, HW_param, dir_name):
     print("task_packet_record: ", task_packet_record)
