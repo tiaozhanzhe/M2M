@@ -84,7 +84,7 @@ class AddrRange
     std::vector<Addr> masks;
 
     /** The value to compare sel with. */
-    uint8_t intlvMatch;
+    uint16_t intlvMatch;
 
   public:
 
@@ -93,7 +93,9 @@ class AddrRange
      */
     AddrRange()
         : _start(1), _end(0), intlvMatch(0)
-    {}
+    {
+        std::cout << "cpp: case 0" << std::endl;
+    }
 
     /**
      * Construct an address range
@@ -126,10 +128,11 @@ class AddrRange
      * @ingroup api_addr_range
      */
     AddrRange(Addr _start, Addr _end, const std::vector<Addr> &_masks,
-              uint8_t _intlv_match)
+              uint16_t _intlv_match)
         : _start(_start), _end(_end), masks(_masks),
           intlvMatch(_intlv_match)
     {
+        std::cout << "cpp: case 1" << std::endl;
         // sanity checks
         fatal_if(!masks.empty() && _intlv_match >= ULL(1) << masks.size(),
                  "Match value %d does not fit in %d interleaving bits\n",
@@ -162,12 +165,14 @@ class AddrRange
      *
      * @ingroup api_addr_range
      */
-    AddrRange(Addr _start, Addr _end, uint8_t _intlv_high_bit,
-              uint8_t _xor_high_bit, uint8_t _intlv_bits,
-              uint8_t _intlv_match)
+    AddrRange(Addr _start, Addr _end, uint16_t _intlv_high_bit,
+              uint16_t _xor_high_bit, uint16_t _intlv_bits,
+              uint16_t _intlv_match)
         : _start(_start), _end(_end), masks(_intlv_bits),
           intlvMatch(_intlv_match)
     {
+        std::cout << "cpp: case 2" << std::endl;
+
         // sanity checks
         fatal_if(_intlv_bits && _intlv_match >= ULL(1) << _intlv_bits,
                  "Match value %d does not fit in %d interleaving bits\n",
@@ -190,10 +195,10 @@ class AddrRange
         }
 
         for (auto i = 0; i < _intlv_bits; i++) {
-            uint8_t bit1 = _intlv_high_bit - i;
+            uint16_t bit1 = _intlv_high_bit - i;
             Addr mask = (1ULL << bit1);
             if (_xor_high_bit) {
-                uint8_t bit2 = _xor_high_bit - i;
+                uint16_t bit2 = _xor_high_bit - i;
                 mask |= (1ULL << bit2);
             }
             masks[_intlv_bits - i - 1] = mask;
@@ -202,7 +207,10 @@ class AddrRange
 
     AddrRange(Addr _start, Addr _end)
         : _start(_start), _end(_end), intlvMatch(0)
-    {}
+    {
+        std::cout << "cpp: case 3" << std::endl;
+
+    }
 
     /**
      * Create an address range by merging a collection of interleaved
@@ -215,6 +223,8 @@ class AddrRange
     AddrRange(const std::vector<AddrRange>& ranges)
         : _start(1), _end(0), intlvMatch(0)
     {
+        std::cout << "cpp: case 4" << std::endl;
+
         if (!ranges.empty()) {
             // get the values from the first one and check the others
             _start = ranges.front()._start;
@@ -230,7 +240,7 @@ class AddrRange
             //     fatal("Got %d ranges spanning %d interleaving bits\n",
             //           ranges.size(), masks.size());
 
-            uint8_t match = 0;
+            uint16_t match = 0;
             for (const auto& r : ranges) {
                 if (!mergesWith(r))
                     fatal("Can only merge ranges with the same start, end "
@@ -270,7 +280,7 @@ class AddrRange
             for (auto mask: masks) {
                 combined_mask |= mask;
             }
-            const uint8_t lowest_bit = ctz64(combined_mask);
+            const uint16_t lowest_bit = ctz64(combined_mask);
             return ULL(1) << lowest_bit;
         } else {
             return size();

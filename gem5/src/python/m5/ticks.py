@@ -77,9 +77,9 @@ def fromSeconds(value):
     int_value = int(
             decimal.Decimal(value).to_integral_value( decimal.ROUND_HALF_UP))
     err = (value - int_value) / value
-    if err > frequency_tolerance:
-        warn("rounding error > tolerance\n    %f rounded to %d", value,
-            int_value)
+    # if err > frequency_tolerance:
+    #     warn("rounding error > tolerance\n    %f rounded to %d", value, int_value)
+    #     # raise AttributeError("rounding error > tolerance %f" % (value / _m5.core.getClockFrequency()))
     return int_value
 
 __all__ = [ 'setGlobalFrequency', 'fixGlobalFrequency', 'fromSeconds',

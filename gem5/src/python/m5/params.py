@@ -755,6 +755,9 @@ class AddrRange(ParamValue):
         self.intlvBits = 0
         self.intlvMatch = 0
         self.masks = []
+        # print("-----------------------")
+        # for arg in args:
+        #     print("another arg through *args:", arg, type(arg))
 
         def handle_kwargs(self, kwargs):
             # An address range needs to have an upper limit, specified
@@ -874,9 +877,9 @@ class AddrRange(ParamValue):
     def getValue(self):
         # Go from the Python class to the wrapped C++ class
         from _m5.range import AddrRange
-
-        return AddrRange(long(self.start), long(self.end),
-                         self.masks, int(self.intlvMatch))
+        # print(type(self.masks))
+        # print("[AddrRange getValue]: ", self.start, self.end, self.masks, self.intlvMatch)
+        return AddrRange(int(self.start), int(self.end),  self.masks, int(self.intlvMatch))
 
 # Boolean parameter type.  Python doesn't let you subclass bool, since
 # it doesn't want to let you create multiple instances of True and
